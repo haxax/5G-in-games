@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class WorldManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class WorldManager : MonoBehaviour
     public Vector2 CurrentGpsLocation { get; private set; } = Vector2.zero;
     public Vector2 Current5gLocation { get; private set; } = Vector2.zero;
 
+    [SerializeField] private float spawnRadius = 50f;
+    [SerializeField] private int gemCount = 100;
+    [SerializeField] private List<GameObject> gemPrefabs = new List<GameObject>();
     [SerializeField] public UnityEvent<Vector2> OnGpsLocationUpdate = new UnityEvent<Vector2>();
     [SerializeField] public UnityEvent<Vector2> On5gLocationUpdate = new UnityEvent<Vector2>();
 
@@ -18,6 +22,10 @@ public class WorldManager : MonoBehaviour
     {
         if (Instance == null) { Instance = this; }
         else if (Instance != this) { Destroy(gameObject); }
+    }
+    private void Start()
+    {
+        SpawnGems();
     }
 
     public void SetLocationOffset(Vector2 realWorldLocationInMeters)
@@ -33,6 +41,14 @@ public class WorldManager : MonoBehaviour
     {
         Current5gLocation = realWorldLocationInMeters.IngameLocation();
         On5gLocationUpdate.Invoke(Current5gLocation);
+    }
+
+    public void SpawnGems()
+    {
+        for (int i = 0; i < gemCount; i++)
+        {
+            Instantiate(gemPrefabs[Random.Range(0, gemPrefabs.Count)], new Vector3(Random.Range(-spawnRadius, spawnRadius), 0f, Random.Range(-spawnRadius, spawnRadius)), Quaternion.identity);
+        }
     }
 }
 

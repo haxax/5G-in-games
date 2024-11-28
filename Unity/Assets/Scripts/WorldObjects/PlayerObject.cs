@@ -19,11 +19,6 @@ public class PlayerObject : MonoBehaviour
         currentScore = 0;
     }
 
-    private void HandleScore()
-    {
-        scoreText.text = "Score: " + currentScore;
-    }
-
     public void SetLocation(Vector2 ingameLocation)
     {
         if (isSimulated) { return; }
@@ -35,12 +30,17 @@ public class PlayerObject : MonoBehaviour
         transform.position = new Vector3(ingameLocation.x, 0f, ingameLocation.y);
         my5G.SetCircleMaterial(my5G.YellowMat);
     }
-    void onCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter(Collider col)
     {
+        Debug.Log("something");
         if (col.gameObject.tag == "Crystal")
         {
-            currentScore ++;
+            currentScore++;
             HandleScore();
+            Destroy(col.gameObject);
         }
     }
+
+    private void HandleScore()
+    { scoreText.text = "Score: " + currentScore; }
 }
