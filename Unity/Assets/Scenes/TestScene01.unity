@@ -787,6 +787,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: 5G Location
       objectReference: {fileID: 0}
+    - target: {fileID: 7385733872452433622, guid: b91686de7b43bb947a466266b40221f9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 8.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385733872452433622, guid: b91686de7b43bb947a466266b40221f9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0887
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385733872452433622, guid: b91686de7b43bb947a466266b40221f9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 8.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385733872452433622, guid: b91686de7b43bb947a466266b40221f9, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
