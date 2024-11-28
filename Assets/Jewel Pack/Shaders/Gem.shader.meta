@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 4443140fbd110a7011005aba44295342
+timeCreated: 1448282519
+licenseType: Store
+ShaderImporter:
+  defaultTextures:
+  - _RefractTex: {fileID: 8900000, guid: 51e3f49dbd110a7011005aba44295342, type: 2}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 19902
+  packageName: Jewel Pack
+  packageVersion: 3.1
+  assetPath: Assets/Jewel Pack/Shaders/Gem.shader
+  uploadId: 591337
