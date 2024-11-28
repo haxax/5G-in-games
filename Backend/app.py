@@ -3,11 +3,23 @@ import requests
 
 app = Flask(__name__)
 
+# Root route for GET requests
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({
+        "message": "Welcome to the Location Retrieval API",
+        "usage": "Send a POST request to /api/location with the required payload."
+    })
 
+# Route to handle POST requests for location retrieval
 @app.route('/api/location', methods=['POST'])
 def retrieve_location():
     # Extract payload from the incoming request
     incoming_data = request.json
+
+    # Validate incoming data
+    if not incoming_data:
+        return jsonify({"error": "Missing payload"}), 400
 
     # Base URL for the Nokia API
     url = "https://location-retrieval.p-eu.rapidapi.com/retrieve"
@@ -15,15 +27,15 @@ def retrieve_location():
     # Payload to send to the Nokia API
     payload = {
         "device": {
-            "phoneNumber": incoming_data.get("phoneNumber", "+358311100537"),
-            "networkAccessIdentifier": incoming_data.get("networkAccessIdentifier", "device@testcsp.net"),
+            "phoneNumber": "+358311100537",
+            "networkAccessIdentifier": "device@testcsp.net",
             "ipv4Address": {
-                "publicAddress": incoming_data.get("publicAddress", "217.140.216.37"),
-                "privateAddress": incoming_data.get("privateAddress", "127.0.0.1"),
-                "publicPort": incoming_data.get("publicPort", 80),
+                "publicAddress": "217.140.216.37",
+                "privateAddress": "192.168.32.1",
+                "publicPort": 80
             },
         },
-        "maxAge": incoming_data.get("maxAge", 3600)
+        "maxAge": 3600
     }
 
     # Headers for the Nokia API request
