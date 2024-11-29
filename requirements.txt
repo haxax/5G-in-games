@@ -1,0 +1,7 @@
+Flask==3.1.0
+Flask-SocketIO==5.4.1
+httpcore==0.17.3
+httpx==0.24.1
+network_as_code==4.1.0
+python-socketio==5.11.4
+requests==2.32.3
