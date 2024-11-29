@@ -16,7 +16,9 @@ public class FivegPoint : MonoBehaviour
     private void Start()
     {
         SetLocation(WorldManager.Instance.Current5gLocation);
+        SetRadius(WorldManager.Instance.Current5gRadius);
         WorldManager.Instance.On5gLocationUpdate.AddListener(SetLocation);
+        WorldManager.Instance.On5gRadiusUpdate.AddListener(SetRadius);
     }
 
     public void SetLocation(Vector2 ingameLocation)

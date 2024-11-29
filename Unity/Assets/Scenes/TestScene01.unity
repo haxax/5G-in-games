@@ -459,6 +459,12 @@ MonoBehaviour:
   On5gLocationUpdate:
     m_PersistentCalls:
       m_Calls: []
+  On5gRadiusUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  New5GLocationData: 0
+  NewLocation: {x: 0, y: 0}
+  NewRadius: 0
 --- !u!1 &1096974986
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +629,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1481875402}
   - component: {fileID: 1481875403}
+  - component: {fileID: 1481875404}
   m_Layer: 0
   m_Name: TCP Connection
   m_TagString: Untagged
@@ -707,6 +714,19 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1481875404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481875401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83ff507f2007bd438519a3daac2eef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverURL: ws://127.0.0.1:5000/ws
 --- !u!1 &1717503572
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,8 +762,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -25.000015}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 276.269, y: -52.503}
+  m_SizeDelta: {x: 552.537, y: 105.006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1717503574
 MonoBehaviour:
@@ -792,8 +812,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

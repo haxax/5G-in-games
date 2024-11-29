@@ -19,7 +19,7 @@ public class LocationWebSocketClient : MonoBehaviour
         {
             Debug.Log("Connected to the Python WebSocket server.");
             // Send a request to start receiving location updates
-            ws.Send("42[\"start_location_updates\"]");
+            //ws.Send("42[\"start_location_updates\"]");
         };
 
         // Handle incoming messages
@@ -33,6 +33,7 @@ public class LocationWebSocketClient : MonoBehaviour
         ws.OnClose += (sender, e) =>
         {
             Debug.Log("Disconnected from WebSocket server.");
+            ws.Close();
         };
 
         // Handle errors
@@ -53,29 +54,54 @@ public class LocationWebSocketClient : MonoBehaviour
             ws.Close();
         }
     }
+    private void OnDestroy()
+    {
+        // Clean up WebSocket connection
+        if (ws != null && ws.IsAlive)
+        {
+            ws.Close();
+        }
+    }
 
     // Process the incoming location data
     private void ProcessData(string data)
     {
-        /*string msgId = data[0];
-        switch (msgId)
+        try
         {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-        }*/
-        // LocationInfo location = JsonUtility.FromJson<LocationInfo>(data);
+            Root root = JsonUtility.FromJson<Root>(data);
+           
+            WorldManager.Instance.Queue5gLocation(new Vector2((float)root.location.area.center.longitude, (float)root.location.area.center.latitude).LocationToMeters(), root.location.area.radius);
+        }
+        catch (Exception ex) { Debug.Log(ex); }
+
+
     }
 }
 
-// Example class for location info (if deserializing JSON data)
 [System.Serializable]
-public class LocationInfo
+public class Location
 {
-    public float latitude;
-    public float longitude;
+    public string lastLocationTime;
+    public Area area;
+}
+
+[System.Serializable]
+public class Area
+{
+    public string areaType;
+    public Center center;
     public float radius;
+}
+
+[System.Serializable]
+public class Center
+{
+    public double latitude;
+    public double longitude;
+}
+
+[System.Serializable]
+public class Root
+{
+    public Location location;
 }
