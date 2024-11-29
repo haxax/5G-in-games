@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System;
-using UnityEngine.iOS;
 
 public class TcpClientUnity : MonoBehaviour
 {
@@ -43,7 +42,7 @@ public class TcpClientUnity : MonoBehaviour
 		if (isConnected && client.Connected)
 		{
 			if (Input.GetKeyDown(KeyCode.M))
-			{ OutgoingMessages.SendMessage(debugField); }
+			{ SendMessageToServer(debugField); }
 			if (Input.GetKeyDown(KeyCode.P))
 			{ OutgoingMessages.SendMessage(PlayerId, 1); }
 			if (Input.GetKeyDown(KeyCode.R))
@@ -80,13 +79,16 @@ public class TcpClientUnity : MonoBehaviour
 				// Check if there is data available
 				if (stream.DataAvailable && client.Available > 0)
 				{
+
 					// Read the incoming message
 					byte[] buffer = new byte[client.Available];
 					stream.Read(buffer, 0, buffer.Length);
 					stream.Flush();
 
+					string msg = Encoding.UTF8.GetString(buffer);
+					Debug.Log($"incoming: {msg}!");
 					// Process the received message
-					incomingMessages.ProcessMessage(buffer);
+					// incomingMessages.ProcessMessage(buffer);
 				}
 			}
 			catch (System.Exception e)
@@ -109,6 +111,16 @@ public class TcpClientUnity : MonoBehaviour
 		catch (Exception ex)
 		{
 			Console.WriteLine($"Error sending message to client: {ex.Message}");
+		}
+	}
+	void SendMessageToServer(string message)
+	{
+		if (isConnected && client.Connected)
+		{
+            byte[] arr = Encoding.UTF8.GetBytes(message);
+			string utf8 = Encoding.UTF8.GetString(arr);
+			writer.WriteLine(utf8);
+			Debug.Log($"Sent to server: {utf8}.");
 		}
 	}
 
