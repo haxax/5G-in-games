@@ -1,12 +1,13 @@
 using UnityEngine;
 using WebSocketSharp;
+using System;
 
 public class LocationWebSocketClient : MonoBehaviour
 {
     private WebSocket ws;
 
     // URL of the WebSocket server
-    [SerializeField] private string serverURL = "ws://127.0.0.1:5000/socket.io/?EIO=4&transport=websocket";
+    [SerializeField] private string serverURL = "ws://127.0.0.1:5000/socket.io/?EIO=3&transport=websocket";
 
     void Start()
     {
@@ -18,14 +19,14 @@ public class LocationWebSocketClient : MonoBehaviour
         {
             Debug.Log("Connected to the Python WebSocket server.");
             // Send a request to start receiving location updates
-            ws.Send("42[start_location_updates]");
+            ws.Send("42[\"start_location_updates\"]");
         };
 
         // Handle incoming messages
         ws.OnMessage += (sender, e) =>
         {
             Debug.Log($"Received message from server: {e.Data}");
-            ProcessLocationData(e.Data);
+            ProcessData(e.Data);
         };
 
         // Handle disconnection
@@ -37,14 +38,14 @@ public class LocationWebSocketClient : MonoBehaviour
         // Handle errors
         ws.OnError += (sender, e) =>
         {
-            Debug.LogError($"WebSocket error: {e.Message}");
+            Debug.Log($"WebSocket error: {e.Message}");
         };
 
         // Connect to the server
         ws.Connect();
     }
 
-void OnApplicationQuit()
+    void OnApplicationQuit()
     {
         // Clean up WebSocket connection
         if (ws != null && ws.IsAlive)
@@ -54,12 +55,19 @@ void OnApplicationQuit()
     }
 
     // Process the incoming location data
-    private void ProcessLocationData(string data)
+    private void ProcessData(string data)
     {
-        // Example: Log data or parse it to update game objects
-        Debug.Log($"Location Data: {data}");
-
-        LocationInfo location = JsonUtility.FromJson<LocationInfo>(data);
+        /*string msgId = data[0];
+        switch (msgId)
+        {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }*/
+        // LocationInfo location = JsonUtility.FromJson<LocationInfo>(data);
     }
 }
 

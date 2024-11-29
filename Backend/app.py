@@ -25,8 +25,8 @@ HEADERS = {
 PAYLOAD = {
     "device": {
         "phoneNumber": "+358311100537"
-    },
-    "maxAge": 3600
+    }
+    # "maxAge": 3600
 }
 
 # Handle GET requests to the root endpoint
