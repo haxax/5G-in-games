@@ -6,11 +6,12 @@ public class WorldManager : MonoBehaviour
 {
     public static WorldManager Instance;
 
-
+    public float WorldScale => worldScale;
     public Vector2 LocationOffset { get; private set; } = Vector2.zero;
     public Vector2 CurrentGpsLocation { get; private set; } = Vector2.zero;
     public Vector2 Current5gLocation { get; private set; } = Vector2.zero;
 
+    [SerializeField] private float worldScale = 0.1f;
     [SerializeField] private float spawnRadius = 50f;
     [SerializeField] private int gemCount = 100;
     [SerializeField] private List<GameObject> gemPrefabs = new List<GameObject>();
@@ -56,6 +57,6 @@ public static class WorldManagerExtensions
 {
     public static Vector2 IngameLocation(this Vector2 realWorldLocation)
     {
-        return realWorldLocation - WorldManager.Instance.LocationOffset;
+        return (realWorldLocation - WorldManager.Instance.LocationOffset) * WorldManager.Instance.WorldScale;
     }
 }

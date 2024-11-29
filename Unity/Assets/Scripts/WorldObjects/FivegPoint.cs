@@ -11,7 +11,7 @@ public class FivegPoint : MonoBehaviour
     [SerializeField] private Material redMat;
     public Material RedMat => redMat;
 
-    public float Radius { get; private set; }
+    public float Radius { get; private set; } = 5f;
 
     private void Start()
     {

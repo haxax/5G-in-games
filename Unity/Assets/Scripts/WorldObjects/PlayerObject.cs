@@ -8,8 +8,9 @@ public class PlayerObject : MonoBehaviour
 {
     [SerializeField] private FivegPoint my5G;
     [SerializeField] private bool isSimulated = false;
+    [SerializeField] private Q4ScoreUpdater scoreUpdater;
     private int currentScore;
-    public TMP_Text scoreText;
+    public int CurrentScore => currentScore;
 
 
     private void Start()
@@ -32,15 +33,25 @@ public class PlayerObject : MonoBehaviour
     }
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log("something");
         if (col.gameObject.tag == "Crystal")
         {
-            currentScore++;
-            HandleScore();
-            Destroy(col.gameObject);
+            CollectableGem gem = col.transform.root.GetComponent<CollectableGem>();
+            HandleScore(CurrentScore, CurrentScore + gem.Points);
+            currentScore += gem.Points;
+            gem.OnCollect();
         }
     }
 
-    private void HandleScore()
-    { scoreText.text = "Score: " + currentScore; }
+    private void HandleScore(int previousScore, int newScore)
+    {
+        if (scoreUpdater.Preset == null)
+        { scoreUpdater.UpdatePreset(); }
+        Keyframe[] newKeys = scoreUpdater.Preset.Evaluatable.keys;
+        newKeys[0].value = previousScore;
+        newKeys[newKeys.Length - 1].value = newScore;
+        scoreUpdater.CustomEvaluatable.keys = newKeys;
+        scoreUpdater.UpdatePreset();
+
+        scoreUpdater.Play();
+    }
 }

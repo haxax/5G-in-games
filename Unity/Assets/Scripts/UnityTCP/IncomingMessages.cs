@@ -47,7 +47,7 @@ public class IncomingMessages
 
         Debug.Log($"Received: location long:{location.LongitudeLatitude.x} lat:{location.LongitudeLatitude.y} radius:{location.Radius}");
         OnLocationReceived.Invoke(location.LongitudeLatitude.LocationToMeters());
-        OnLocationRadiusReceived.Invoke(location.Radius);
+        OnLocationRadiusReceived.Invoke(location.Radius * WorldManager.Instance.WorldScale);
     }
 
 
