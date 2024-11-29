@@ -1,5 +1,5 @@
 using UnityEngine;
-/*using WebSocketSharp;
+using WebSocketSharp;
 
 public class LocationWebSocketClient : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class LocationWebSocketClient : MonoBehaviour
         {
             Debug.Log("Connected to the Python WebSocket server.");
             // Send a request to start receiving location updates
-            ws.Send("42["start_location_updates"]");
+            ws.Send("42[start_location_updates]");
         };
 
         // Handle incoming messages
@@ -43,7 +43,7 @@ public class LocationWebSocketClient : MonoBehaviour
         // Connect to the server
         ws.Connect();
     }
-    Continued in next as well..
+
 void OnApplicationQuit()
     {
         // Clean up WebSocket connection
@@ -58,10 +58,8 @@ void OnApplicationQuit()
     {
         // Example: Log data or parse it to update game objects
         Debug.Log($"Location Data: {data}");
-        // Parse JSON if needed and update game objects or UI
-        // Example: Deserialize JSON (requires Unity's JsonUtility or other libraries)
-        // LocationInfo location = JsonUtility.FromJson<LocationInfo>(data);
-        // UpdateGameObjects(location);
+
+        LocationInfo location = JsonUtility.FromJson<LocationInfo>(data);
     }
 }
 
@@ -72,4 +70,4 @@ public class LocationInfo
     public float latitude;
     public float longitude;
     public float radius;
-}*/
+}
