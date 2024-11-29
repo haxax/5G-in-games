@@ -34,7 +34,7 @@ public class FivegPoint : MonoBehaviour
 
     public bool IsWithingRadius(GameObject obj, bool changeColor = true)
     {
-        if (Vector2.Distance(new Vector2(obj.transform.position.x, obj.transform.position.y), new Vector2(transform.position.x, transform.position.y)) > Radius)
+        if (Vector2.Distance(new Vector2(obj.transform.position.x, obj.transform.position.y), new Vector2(transform.position.x, transform.position.y)) > Radius/2f)
         {
             SetCircleMaterial(redMat);
             return false;

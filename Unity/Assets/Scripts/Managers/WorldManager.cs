@@ -45,7 +45,7 @@ public class WorldManager : MonoBehaviour
 
     public void Update5GLocation(Vector2 realWorldLocationInMeters)
     {
-        if(LocationOffset == Vector2.zero) { LocationOffset = realWorldLocationInMeters; }
+        if (LocationOffset == Vector2.zero) { LocationOffset = realWorldLocationInMeters; }
         Current5gLocation = realWorldLocationInMeters.IngameLocation();
         On5gLocationUpdate.Invoke(Current5gLocation);
     }
@@ -71,7 +71,7 @@ public class WorldManager : MonoBehaviour
     private readonly object locationLock5g = new();
     public void Queue5gLocation(Vector2 location, float radius)
     {
-        lock(locationLock5g)
+        lock (locationLock5g)
         {
             NewLocation = location;
             NewRadius = radius;
@@ -90,7 +90,8 @@ public class WorldManager : MonoBehaviour
                 New5GLocationData = false;
             }
         }
-        Debug.Log(Input.location.lastData.longitude);
+        if (Input.location.status == LocationServiceStatus.Running)
+        { UpdateGpsLocation(new Vector2(Input.location.lastData.longitude, Input.location.lastData.latitude).LocationToMeters()); }
     }
 }
 
