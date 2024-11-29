@@ -1,32 +1,44 @@
-import socketio
+import websocket
+import threading
+import time
+import json
 
-# Create a Socket.IO client
-sio = socketio.Client()
+def on_message(ws, message):
+    print("Received message:", message)
+    # You can parse the JSON message here if needed
+    # data = json.loads(message)
+    # Process the data as required
 
-# Event: Connected to the server
-@sio.event
-def connect():
+def on_error(ws, error):
+    print("WebSocket error:", error)
+
+def on_close(ws, close_status_code, close_msg):
+    print("WebSocket connection closed")
+
+def on_open(ws):
     print("Connected to the server")
-    # Request location updates
-    sio.emit("start_location_updates")
+    # If the server expects any initial messages, send them here
+    # ws.send(json.dumps({'command': 'start'}))
 
-# Event: Received location update
-@sio.on("location_update")
-def on_location_update(data):
-    print("Received location update:", data)
+if __name__ == "__main__":
+    websocket.enableTrace(False)  # Set to True for detailed logs
+    ws_url = "ws://127.0.0.1:5000/ws"
 
-# Event: Error from the server
-@sio.on("error")
-def on_error(data):
-    print("Error from server:", data)
+    ws = websocket.WebSocketApp(
+        ws_url,
+        on_open=on_open,
+        on_message=on_message,
+        on_error=on_error,
+        on_close=on_close
+    )
 
-# Event: Disconnected from the server
-@sio.event
-def disconnect():
-    print("Disconnected from server")
+    wst = threading.Thread(target=ws.run_forever)
+    wst.daemon = True
+    wst.start()
 
-# Connect to the Socket.IO server
-sio.connect("http://127.0.0.1:5001")
-
-# Wait for events
-sio.wait()
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Closing connection...")
+        ws.close()
