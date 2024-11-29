@@ -26,7 +26,7 @@ def disconnect():
     print("Disconnected from server")
 
 # Connect to the Socket.IO server
-sio.connect("http://127.0.0.1:5000")
+sio.connect("http://127.0.0.1:5001")
 
 # Wait for events
 sio.wait()
