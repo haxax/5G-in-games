@@ -56,7 +56,7 @@ public class PlayerObject : MonoBehaviour
 	}
 	void OnTriggerEnter(Collider col)
 	{
-		if (col.gameObject.tag == "Crystal")
+		if (col.gameObject.tag == "Crystal" && my5G.IsWithingRadius(gameObject, false))
 		{
 			CollectableGem gem = col.transform.root.GetComponent<CollectableGem>();
 			HandleScore(CurrentScore, CurrentScore + gem.Points);
